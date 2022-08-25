@@ -1,0 +1,16 @@
+.entity-selector-container lightning-input {
+    display: inline-block;
+}
+
+.entity-selector-container {
+    background-color: rgb(243, 242, 242);
+}
+
+lightning-vertical-navigation-item {
+    display: block !important;
+}
+
+.scrollable {
+    overflow-y: scroll;
+    height: 26.25rem;
+}

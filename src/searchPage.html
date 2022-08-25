@@ -1,0 +1,28 @@
+<template>
+  <div onkeyup={handleKeyUp} class="search-bar-container">
+    <lightning-input name="enter-search" label="Type your search query here" type="search"
+      class="search-bar slds-p-bottom_medium" onchange={updateSearchTerm}></lightning-input>
+  </div>
+  <div class="slds-grid slds-gutters">
+    <div class="slds-col slds-size_1-of-4">
+      <lightning-button if:true={isScopedSearch} variant="base" label="Back" title="Return to Top Results"
+        icon-name="utility:arrow_left" class="slds-m-left_x-small" onclick={displayTopResults}></lightning-button>
+      <c-searchable-entities-list entities={objectApiNames} onentityselected={handleSelect}>
+      </c-searchable-entities-list>
+      <lightning-button if:true={hasMoreEntities} variant="base" label="Show More" title="Show more entities"
+        icon-name="utility:arrow_bottom" class="slds-m-left_x-small" onclick={fetchMoreEntities}></lightning-button>
+    </div>
+
+    <div class="slds-col slds-size_3-of-4">
+      <div>
+        <template for:each={buckets} for:item="entity" if:false={loadingResults}>
+          <div key={entity.objectApiName} class="slds-m-bottom_small">
+            <c-entity-search-results-list entity={entity} onloadmore={loadMoreData} onsort={sortResults}>
+            </c-entity-search-results-list>
+          </div>
+        </template>
+        <lightning-spinner alternative-text="Loading" size="medium" if:true={loadingResults}></lightning-spinner>
+      </div>
+    </div>
+  </div>
+</template>

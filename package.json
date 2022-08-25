@@ -1,0 +1,7 @@
+{
+  "name": "@wcd/ngour5.lwc-search-page-fork-l79ej94w",
+  "version": "0.0.0",
+  "scripts": {
+    "serve": "npx wcd-cli@latest serve XXTqlNVaO7wIpIVdydOb --open"
+  }
+}

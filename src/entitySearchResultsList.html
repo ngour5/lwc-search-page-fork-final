@@ -1,0 +1,9 @@
+<template>
+  <div class="slds-page-header slds-page-header_joined">
+    <h2 class="slds-page-header__title">{label}</h2>
+  </div>
+  <lightning-datatable key-field="Id" data={results} hide-checkbox-column columns={fields} enable-infinite-loading
+    onloadmore={handleLoadMore} default-sort-direction={defaultSortDirection} sorted-direction={sortDirection}
+    sorted-by={sortedBy} onsort={handleSort}>
+  </lightning-datatable>
+</template>

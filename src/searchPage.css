@@ -1,0 +1,7 @@
+.entity-selector-container span {
+    display: block;
+}
+
+.entity-selector-container {
+    background-color: rgb(243, 242, 242);
+}
