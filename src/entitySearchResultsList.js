@@ -1,4 +1,4 @@
-import {LightningElement, api} from "lwc";
+import {LightningElement, api, track} from "lwc";
 
 export default class EntitySearchResultsList extends LightningElement {
     _entity;
@@ -25,8 +25,8 @@ export default class EntitySearchResultsList extends LightningElement {
     results = [];
 
     defaultSortDirection = "asc";
-    sortDirection = "asc";
-    sortedBy;
+    @track sortDirection = "asc";
+    @track sortedBy;
 
     /**
      * This code must be inside the component adapter wrapping the data table
@@ -60,6 +60,9 @@ export default class EntitySearchResultsList extends LightningElement {
                     if(originalValue instanceof Object){
                         key = key.replaceAll("\.", "-");
                     }
+                    
+                    val = val.replace("<br>", " ");
+                    val = val.replace(/<\/?[^>]+(>|$)/g, "");
 
                     return [key, val]
                 })
@@ -85,6 +88,7 @@ export default class EntitySearchResultsList extends LightningElement {
                 copyField.fieldName = copyField.fieldName.split(".")[0];
             }
 
+            copyField.sortable = true;
             copyData.push(copyField);
         }
 
@@ -98,7 +102,27 @@ export default class EntitySearchResultsList extends LightningElement {
         this.dispatchEvent(new CustomEvent('loadmore', {detail: {name: "juan"}}));
     }
 
-    handleSort(evt){
-        this.dispatchEvent(new CustomEvent('sort', {detail: {name: "juan"}}));
+    handleSort({ detail }) {
+        this.sortedBy = detail.fieldName;
+        this.sortDirection = detail.sortDirection;
+        this.performSort(this.sortedBy, this.sortDirection);
+    }
+
+    performSort(sortColumn, sortDirection) {
+        let parseData = JSON.parse(JSON.stringify(this.results));
+        // Return the value stored in the field
+        let keyValue = (a) => {
+            return a[sortColumn];
+        };
+        // cheking direction
+        let isReverse = sortDirection === 'asc' ? 1: -1;
+        // sorting data
+        parseData.sort((x, y) => {
+            x = keyValue(x) ? keyValue(x) : ''; // handling null values
+            y = keyValue(y) ? keyValue(y) : '';
+            // sorting values based on direction
+            return isReverse * ((x > y) - (y > x));
+        });
+        this.results = parseData;
     }
 }
