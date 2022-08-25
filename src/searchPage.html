@@ -1,12 +1,11 @@
 <template>
   <div onkeyup={handleKeyUp} class="search-bar-container">
-    <lightning-input name="enter-search" label="Type your search query here" type="search"
-      class="search-bar slds-p-bottom_medium" onchange={updateSearchTerm}></lightning-input>
+    <legend class="page-header">Search</legend>
+    <lightning-input name="enter-search" variant="label-hidden" label="Label" placeholder="Type your search query here"
+      type="search" class="search-bar slds-p-bottom_medium" onchange={updateSearchTerm}></lightning-input>
   </div>
   <div class="slds-grid slds-gutters">
-    <div class="slds-col slds-size_1-of-4">
-      <lightning-button if:true={isScopedSearch} variant="base" label="Back" title="Return to Top Results"
-        icon-name="utility:arrow_left" class="slds-m-left_x-small" onclick={displayTopResults}></lightning-button>
+    <div if:true={showNavItems} class="slds-col slds-size_1-of-4">
       <c-searchable-entities-list entities={objectApiNames} onentityselected={handleSelect}>
       </c-searchable-entities-list>
       <lightning-button if:true={hasMoreEntities} variant="base" label="Show More" title="Show more entities"

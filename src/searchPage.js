@@ -18,16 +18,22 @@ export default class SearchPage extends LightningElement {
     allEntitiesCopy = [];
     isTopResults = true;
 
+    showNavItems = false;
+
 
     handleSelect(evt) {
         let selectedEntity = evt.detail.name;
         console.log(selectedEntity);
-        this.selectedEntity = selectedEntity;
-        this.offset = 0;
-        this.pageSize = 1;
-        this.buckets = [];
-        this.isTopResults = false;
-        this.doQuery();
+        if (selectedEntity === "top_results") {
+            this.displayTopResults();
+        } else {
+            this.selectedEntity = selectedEntity;
+            this.offset = 0;
+            this.pageSize = 1;
+            this.buckets = [];
+            this.isTopResults = false;
+            this.doQuery();
+        }
     }
 
     displayTopResults() {
@@ -58,6 +64,7 @@ export default class SearchPage extends LightningElement {
             .then((data) => {
                 this.inflateResults(data, false);
                 this.loadingResults = false;
+                this.showNavItems = true;
             })
             .catch((error) => {
                 console.error(error);

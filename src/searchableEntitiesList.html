@@ -1,23 +1,20 @@
 <template>
   <div class="entity-selector-container slds-p-horizontal_small">
     <div>
-      <lightning-input name="enter-search" label="Matching entities" type="search" class="slds-p-bottom_medium"
-        onchange={filterEntities}></lightning-input>
+      <legend class="slds-form-element__legend slds-form-element__label">Matching entities</legend>
+      <lightning-input name="enter-search" variant="label-hidden" label="Matching entities" type="search"
+        class="slds-p-bottom_medium" onchange={filterEntities}></lightning-input>
     </div>
-
-    <span class="slds-p-bottom_medium">Total entities: {totalCount}</span>
 
     <lightning-spinner alternative-text="Loading" size="large" if:true={loadingEntities}></lightning-spinner>
 
     <div if:false={loadingEntities} class="scrollable">
-      <lightning-vertical-navigation onselect={handleSelect} class="navigation">
+      <lightning-vertical-navigation onselect={handleSelect} class="navigation" selected-item="top_results">
+        <lightning-vertical-navigation-item name="top_results" label="Top Results"></lightning-vertical-navigation-item>
+        <span class="slds-text-title_bold slds-p-bottom_medium">Total entities: {totalCount}</span>
         <template for:each={navigationItems} for:item="navItem">
-          <lightning-vertical-navigation-item-badge 
-            key={navItem.objectApiName} 
-            label={navItem.labelPlural} 
-            name={navItem.objectApiName}
-            badge-count={navItem.count}
-          >
+          <lightning-vertical-navigation-item-badge key={navItem.objectApiName} label={navItem.labelPlural}
+            name={navItem.objectApiName} badge-count={navItem.count}>
           </lightning-vertical-navigation-item-badge>
         </template>
       </lightning-vertical-navigation>

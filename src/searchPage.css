@@ -5,3 +5,8 @@
 .entity-selector-container {
     background-color: rgb(243, 242, 242);
 }
+
+.page-header {
+    font-size: 20px;
+    font-weight: bold;
+}
